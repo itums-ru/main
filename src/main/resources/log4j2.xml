@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+   <Appenders>
+       <File name="MyFileAppender" fileName="G:\IntelliJ IDEA 2019.1.3\Sourse\Personal_account_and_automation_service\src\main\resources\log.txt" append="false">
+           <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+       </File>
+   </Appenders>
+   <Loggers>
+       <Root level="ALL">
+           <AppenderRef ref="MyFileAppender"/>
+       </Root>
+   </Loggers>
+</Configuration>

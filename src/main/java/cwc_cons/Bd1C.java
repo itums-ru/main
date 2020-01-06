@@ -25,7 +25,7 @@ public class Bd1C {
     private String sb_external;                 //внешнее управление сеансами
     private boolean sb_necessarily;             //обязательное использование внешнего управления
     private String sb_profile;                  //профиль безопасности
-    private String sb_profile_sec;              //профиль безопасности безопасног режима
+    private String sb_profile_sec;              //профиль безопасности безопасного режима
 
     /**
      * Обязательный конструктор по умолчанию

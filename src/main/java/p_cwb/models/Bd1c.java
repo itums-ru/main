@@ -10,15 +10,21 @@ public class Bd1c {
         @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long sb_id;
-
+    @Column(nullable = false)
     private String sb_name;                     //имя
     private String sb_prop;                     //описание
+    @Column(nullable = false)
     private Boolean sb_conn_sec;                 //защищенное соединение
+    @Column(nullable = false)
     private String sb_server;                   //сервер бд
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Type_bd sb_type_server;             //тип субд
+    @Column(nullable = false)
     private String sbd_name;                    //бд(наименование в консоли сервера)
+    @Column(nullable = false)
     private String sb_user_name;                //пользователь сервера бд
+    @Column(nullable = false)
     private String sb_user_pass;                //пароль сервера бд
     private boolean sb_lic;                     //разрешить выдачу лицензий серверов бд
     private boolean sb_block;                   //блокировка начала сеансов выключена
@@ -29,6 +35,16 @@ public class Bd1c {
     @JoinColumn(name = "cluster1c_id")
     private Cluster1c cluster1c;
     public Bd1c(){}
+
+    public Bd1c(String sb_name, Boolean sb_conn_sec, String sb_server, Type_bd sb_type_server, String sbd_name, String sb_user_name, String sb_user_pass) {
+        this.sb_name = sb_name;
+        this.sb_conn_sec = sb_conn_sec;
+        this.sb_server = sb_server;
+        this.sb_type_server = sb_type_server;
+        this.sbd_name = sbd_name;
+        this.sb_user_name = sb_user_name;
+        this.sb_user_pass = sb_user_pass;
+    }
 
     public Bd1c(String sb_name, String sb_prop, Boolean sb_conn_sec, String sb_server, Type_bd sb_type_server, String sbd_name, String sb_user_name, String sb_user_pass, boolean sb_lic, boolean sb_block, Date sb_date_begin, Date sb_date_end) {
         this.sb_name = sb_name;

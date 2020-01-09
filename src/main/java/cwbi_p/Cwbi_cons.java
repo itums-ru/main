@@ -1,4 +1,7 @@
 package cwbi_p;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -6,7 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Cwbi_cons implements ITemplateConfig, ILogging, IType_file{
+public class Cwbi_cons implements ITemplateConfig, IType_file{
+    private static final Logger LOGGER = LoggerFactory.getLogger("cwbi_p.Cwbi_cons");
     interface FuncForCheck{
         boolean func(String value);
     }
@@ -81,13 +85,9 @@ public class Cwbi_cons implements ITemplateConfig, ILogging, IType_file{
                     paths.add(fileContent.substring(matcher.start()+"CommonInfoBases=".length(), matcher.end()));
                 }
             }catch (FileNotFoundException e){
-                LOGGER.error(e.toString());
-                for (StackTraceElement s:e.getStackTrace())
-                    LOGGER.error(s.toString());
+                writeOnLogError(e);
             }catch (IOException e){
-                LOGGER.error(e.toString());
-                for (StackTraceElement s:e.getStackTrace())
-                    LOGGER.error(s.toString());
+                writeOnLogError(e);
             }
         }
         return paths;
@@ -142,7 +142,7 @@ public class Cwbi_cons implements ITemplateConfig, ILogging, IType_file{
 
 
         } catch (Exception e) {
-            LOGGER.error(e.toString());
+            writeOnLogError(e);
         }
         return map;
 
@@ -249,7 +249,7 @@ public class Cwbi_cons implements ITemplateConfig, ILogging, IType_file{
             }
         }
         catch (Exception e){
-            LOGGER.error(e.toString());
+            writeOnLogError(e);
         }
         return s.toString();
     }
@@ -272,6 +272,11 @@ public class Cwbi_cons implements ITemplateConfig, ILogging, IType_file{
 
     public List<String> getServers() {
         return Servers;
+    }
+    final static private void writeOnLogError(Exception e){
+        LOGGER.error(e.toString());
+        for(StackTraceElement s:e.getStackTrace())
+            LOGGER.error("\t"+s);
     }
 
 }

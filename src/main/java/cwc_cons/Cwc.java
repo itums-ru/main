@@ -1,5 +1,8 @@
 package cwc_cons;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,7 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Cwc implements ILogging {
+public class Cwc{
+    private static final Logger LOGGER = LoggerFactory.getLogger("cwc_cons.Cwc");
     public enum Keys1{
         id(0),             //id
         sb_name(1),       //наименование базы в кластере
@@ -289,9 +293,7 @@ public class Cwc implements ILogging {
                 sb.append(content.toCharArray()[i]);
             }
         }catch (Exception e){
-            LOGGER.error(e.toString());
-            for(StackTraceElement s:e.getStackTrace())
-                LOGGER.error("\t"+s.toString()+" "+e.toString());
+            writeOnLogError(e);
         }
         return sb.toString();
 
@@ -338,9 +340,7 @@ public class Cwc implements ILogging {
             }
 
         }catch (Exception e){
-            LOGGER.error(e.toString());
-            for(StackTraceElement s:e.getStackTrace())
-                LOGGER.error("\t"+s.toString()+" "+e.toString());
+            writeOnLogError(e);
         }
     }
 
@@ -439,11 +439,14 @@ public class Cwc implements ILogging {
                 }
             }
         }catch (Exception e){
-            LOGGER.error(e.toString());
-            for(StackTraceElement s:e.getStackTrace())
-                LOGGER.error("\t"+s.toString()+" "+e.toString());
+            writeOnLogError(e);
         }
 
+    }
+     static private void writeOnLogError(Exception e){
+        LOGGER.error(e.toString());
+        for(StackTraceElement s:e.getStackTrace())
+            LOGGER.error("\t"+s);
     }
 
 

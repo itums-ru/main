@@ -11,6 +11,12 @@ import java.util.List;
 
 public abstract class AbstractController<E, K> {
     private static final Logger LOGGER = LoggerFactory.getLogger("p_cwb.dao.AbstractController");
+
+    /**
+     * Выполняет запрос вида SELECT * FROM таблица сущности
+     * @param simpleClassName используется для переопределения в классах-наследниках
+     * @return список значений
+     */
     protected List<E> getAll(String simpleClassName){
         try(Session s = SessionFactoryUtil.getSessionFactory().openSession()){
             List<E> list = s.createQuery("From " + simpleClassName).getResultList();
@@ -21,6 +27,14 @@ public abstract class AbstractController<E, K> {
         }
         return null;
     }
+
+    /**
+     * Выполняет запрос вида SELECT * FROM таблица сущности WHERE columnName=value
+     * @param simpleClassName используется для переопределения в классах наследниках
+     * @param columnName имя столбца
+     * @param value значение столбца
+     * @return список значений
+     */
     protected List<E> getAllWhere(String simpleClassName, String columnName, String value){
         try(Session s = SessionFactoryUtil.getSessionFactory().openSession()){
             List<E> list = s.createQuery("From " + simpleClassName+" where "+columnName+"=\'"+value+"\'").getResultList();
@@ -31,6 +45,11 @@ public abstract class AbstractController<E, K> {
         }
         return null;
     }
+
+    /**
+     * Обновление объекта сущности
+     * @param entity объект сущности
+     */
     protected void update(E entity){
         try(Session s = SessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction t = s.beginTransaction();
@@ -39,6 +58,13 @@ public abstract class AbstractController<E, K> {
             writeOnLogError(e);
         }
     }
+
+    /**
+     * Получении копии объекта сущности по ID
+     * @param entityClass используется для переопределения в классах наследниках
+     * @param id идентификатор объекта сущности
+     * @return объет сущности
+     */
     protected   E getById(Class<E> entityClass, K id){
         try(Session s = SessionFactoryUtil.getSessionFactory().openSession()){
             E entity = s.get(entityClass, (Serializable) id);
@@ -47,6 +73,13 @@ public abstract class AbstractController<E, K> {
         }catch (Exception e){writeOnLogError(e);}
         return null;
     }
+
+    /**
+     * Удалении строки в таблице сущности по ID
+     * @param entityClass используется для переопределения в классах наследниках
+     * @param id идентификатор объекта сущности
+     * @return успешно/безуспешно
+     */
     protected boolean deleteById(Class<E> entityClass,K id){
         try(Session s=SessionFactoryUtil.getSessionFactory().openSession()){
             E entity = s.load(entityClass, (Serializable) id);
@@ -60,6 +93,12 @@ public abstract class AbstractController<E, K> {
         }
         return false;
     }
+
+    /**
+     * Удалении строки в таблице сущности
+     * @param entity объект сущности
+     * @return успешно/безуспешно
+     */
     protected boolean delete(E entity){
         try(Session s= SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction t = s.beginTransaction();
@@ -72,6 +111,12 @@ public abstract class AbstractController<E, K> {
         }
         return false;
     }
+
+    /**
+     * Сохранение объекта сущности в таблицу сущности
+     * @param entity объект сущности
+     * @return успешно/безуспешно
+     */
     protected boolean save(E entity){
         try(Session s=SessionFactoryUtil.getSessionFactory().openSession()){
             Transaction t = s.beginTransaction();

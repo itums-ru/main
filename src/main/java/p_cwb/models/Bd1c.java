@@ -2,18 +2,12 @@ package p_cwb.models;
 
 import javax.persistence.*;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
-enum Type_bd {
-    MSSQLServer,
-    PostgreSQL,
-    DB2,
-    Oracle;
-}
 @Entity
 public class Bd1c {
-    @Id
+
+
+        @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long sb_id;
 
